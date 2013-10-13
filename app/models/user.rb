@@ -4,4 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable, :timeoutable
+
+  has_many :locations
+  has_many :checkins, through: :checkins, source: :place
+  has_one  :my_map
 end

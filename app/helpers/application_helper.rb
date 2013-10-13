@@ -21,4 +21,7 @@ module ApplicationHelper
     @devise_mapping ||= Devise.mappings[:user]
   end
 
+  def isAdmin?
+    false
+  end
 end

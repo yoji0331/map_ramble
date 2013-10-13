@@ -1,4 +1,20 @@
 MapRamble::Application.routes.draw do
+  resources :way_points
+
+  resources :my_maps
+
+  resources :initials
+
+  resources :checkins
+
+  resources :locations
+
+  resources :place_images
+
+  resources :places
+
+  resources :categories
+
   devise_for :users
   root to: 'home#index'
   # The priority is based upon order of creation: first created -> highest priority.

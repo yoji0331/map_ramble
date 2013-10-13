@@ -1,0 +1,25 @@
+<%= form_for(@way_point) do |f| %>
+  <% if @way_point.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@way_point.errors.count, "error") %> prohibited this way_point from being saved:</h2>
+
+      <ul>
+      <% @way_point.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :place %><br>
+    <%= f.text_field :place %>
+  </div>
+  <div class="field">
+    <%= f.label :my_map %><br>
+    <%= f.text_field :my_map %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

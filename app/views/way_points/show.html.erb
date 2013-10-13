@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Place:</strong>
+  <%= @way_point.place %>
+</p>
+
+<p>
+  <strong>My map:</strong>
+  <%= @way_point.my_map %>
+</p>
+
+<%= link_to 'Edit', edit_way_point_path(@way_point) %> |
+<%= link_to 'Back', way_points_path %>

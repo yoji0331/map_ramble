@@ -1,0 +1,31 @@
+<h1>Listing place_images</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Place</th>
+      <th>Data</th>
+      <th>Content type</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @place_images.each do |place_image| %>
+      <tr>
+        <td><%= place_image.place %></td>
+        <td><%= place_image.data %></td>
+        <td><%= place_image.content_type %></td>
+        <td><%= link_to 'Show', place_image %></td>
+        <td><%= link_to 'Edit', edit_place_image_path(place_image) %></td>
+        <td><%= link_to 'Destroy', place_image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Place image', new_place_image_path %>

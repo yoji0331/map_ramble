@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Place:</strong>
+  <%= @place_image.place %>
+</p>
+
+<p>
+  <strong>Data:</strong>
+  <%= @place_image.data %>
+</p>
+
+<p>
+  <strong>Content type:</strong>
+  <%= @place_image.content_type %>
+</p>
+
+<%= link_to 'Edit', edit_place_image_path(@place_image) %> |
+<%= link_to 'Back', place_images_path %>

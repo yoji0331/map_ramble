@@ -1,0 +1,29 @@
+<h1>Listing way_points</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Place</th>
+      <th>My map</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @way_points.each do |way_point| %>
+      <tr>
+        <td><%= way_point.place %></td>
+        <td><%= way_point.my_map %></td>
+        <td><%= link_to 'Show', way_point %></td>
+        <td><%= link_to 'Edit', edit_way_point_path(way_point) %></td>
+        <td><%= link_to 'Destroy', way_point, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Way point', new_way_point_path %>

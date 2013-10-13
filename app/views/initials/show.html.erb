@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Lat:</strong>
+  <%= @initial.lat %>
+</p>
+
+<p>
+  <strong>Lng:</strong>
+  <%= @initial.lng %>
+</p>
+
+<p>
+  <strong>Zoom:</strong>
+  <%= @initial.zoom %>
+</p>
+
+<%= link_to 'Edit', edit_initial_path(@initial) %> |
+<%= link_to 'Back', initials_path %>

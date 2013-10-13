@@ -20,8 +20,7 @@
 <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { confirm: "ログアウトしますか？", role: "button" } %>
 <% else %>
 <hr />
-<p>アカウントをお持ちの方は、ログインしてください。</p>
-<p>なお、誠に恐れ入りますが、今回は実証実験中なので流山まちなみ会の「スマート散策会」に参加される方以外は『ログイン』機能が使えなくなっています。</p>
+<p>ユーザー登録してログインすると、すべての機能が使えるようになります。</p>
 <%= link_to "ログイン", new_user_session_path, data: { role: :button, theme: "b" } %>
 <%= link_to "新規ユーザー登録", new_user_registration_path, data: { role: :button } %>
 <% end %>

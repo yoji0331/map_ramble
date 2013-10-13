@@ -1,18 +1,32 @@
-<h2>Sign up</h2>
+<% provide :title, t("Sign up") %>
+<h2><%= yield(:title) %></h2>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { data: { ajax: false } }) do |f| %>
   <%= devise_error_messages! %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+  <ul data-role="listview" data-inset="true">
+    <li data-role="fieldcontain">
+      <%= f.label :name %>
+      <%= f.text_field :name, autofocus: true %>
+    </li>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+    <li data-role="fieldcontain">
+      <%= f.label :email %>
+      <%= f.email_field :email %>
+    </li>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+    <li data-role="fieldcontain">
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </li>
 
-  <div><%= f.submit "Sign up" %></div>
+    <li data-role="fieldcontain">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation %>
+    </li>
+
+    <li><%= f.submit t("Sign up"), data: { inline: true } %></li>
+  </ul>
 <% end %>
 
 <%= render "devise/shared/links" %>

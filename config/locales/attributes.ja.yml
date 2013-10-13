@@ -1,0 +1,18 @@
+ja:
+  activerecord:
+    models:
+      user: 'ユーザー'
+    attributes:
+      user:
+        email: 'メールアドレス'
+        password: 'パスワード'
+        password_confirmation: 'パスワード(確認)'
+        remember_me: 'パスワードを記憶'
+        current_password: '現在のパスワード'
+    successful:
+      messages:
+        created: "%{model}を保存しました。"
+        updated: "%{model}を更新しました。"
+  errors:
+    messages:
+      not_saved: "エラー"

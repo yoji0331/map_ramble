@@ -1,8 +1,7 @@
 <div data-role="header" data-position="fixed">
-  <% if user_signed_in? %>
-    <%= link_to t("Menu"), "#menu_panel", data: { icon: "bars" } %>
+  <% if controller.controller_name == "home" && controller.action_name == "index" %>
   <% else %>
-    <%= link_to t("Home"), root_path, data: { icon: "home" } %>
+    <%= link_to t("Menu"), "#menu_panel", data: { icon: "bars" } %>
   <% end %>
   <h1><%= full_title(yield(:title)) %></h1>
 </div><!-- /header -->

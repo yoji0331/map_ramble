@@ -8,9 +8,9 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 
-  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
-  <script type="text/javascript" src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
-  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+  <script type="text/javascript" src="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
 <script type="text/javascript">
 var MAPRAMBLE = {};
 MAPRAMBLE.places = [];
@@ -56,10 +56,12 @@ MAPRAMBLE.places[<%= way_point.place_id %>].isWayPoint = true;
 </head>
 <body>
   <div data-role="page" id="map">
+    <%= render 'layouts/menu_panel' %>
     <div data-role="header" id="header">
       <div data-role="navbar">
         <ul>
-          <li><%= link_to "ホーム", root_path %></li>
+          <li><%= link_to t("Menu"), "#menu_panel" %></li>
+          <!-- <li><%= link_to "ホーム", root_path %></li> -->
           <li><a href="#" id="getLocation">現在位置</a></li>
           <li><a href="#" id="calcRoute">ルート探索</a></li>
         </ul>

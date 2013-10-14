@@ -1,8 +1,22 @@
 <div data-role="panel" id="menu_panel">
-  <ul data-role="listview">
-    <li data-role="list-divider"><%= t("Favorites") %></li>
-    <li><%= link_to t("Home"), root_path %></li>
-    <li data-role="list-divider"><%= t("Self Informations") %></li>
-    <li><%= link_to t("Sign out"), destroy_user_session_path, method: :delete, data: { ajax: false } %></li>
-  </ul>
+<ul data-role="listview">
+  <li><%= link_to t("Home"), root_path %></li>
+  <li><%= link_to "地区の一覧へ", categories_path %></li>
+  <% if user_signed_in? %>
+  <li><%= link_to "チェックインした場所の一覧へ", checkins_path %></li>
+  <li><%= link_to "位置情報を記録した場所の一覧へ", locations_path %></li>
+  <% if current_user.admin? %>
+  <li><%= link_to "場所の一覧へ", places_path %></li>
+  <li><%= link_to "初期設定の確認と変更へ", initials_path %></li>
+  <% end %>
+  <% end %>
+  <li><a href="/map">マップへ</a></li>
+  <li><%= link_to "マイマップに登録した地点の一覧へ", @my_map %></li>
+<% if user_signed_in? %>
+<li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { confirm: "ログアウトしますか？" } %></li>
+<% else %>
+<li><%= link_to "ログイン", new_user_session_path %></li>
+<li><%= link_to "新規ユーザー登録", new_user_registration_path %></li>
+<% end %>
+</ul>
 </div><!-- /menu_panel -->

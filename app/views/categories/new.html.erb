@@ -1,5 +1,25 @@
-<h1>New category</h1>
+<% provide :title, "地区の追加" %>
+<h1><%= yield(:title) %></h1>
 
-<%= render 'form' %>
-
-<%= link_to 'Back', categories_path %>
+<%= form_for(@category) do |f| %>
+<% if @category.errors.any? %>
+<div id="error_explanation" class="alert-error">
+  <h2><%= @category.errors.count %>つのエラーがあり、地区を保存できませんでした。
+  </h2>
+  <ul>
+    <% @category.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+<div class="field" data-role="fieldcontain">
+  <%= f.label :name, "地区の名前" %>
+  <%= f.text_field :name, { "placeholder" => "地区の名前" } %>
+</div>
+<div class="actions">
+  <%= f.submit "上記の内容で追加する", data: { icon: :plus } %>
+</div>
+<% end %>
+<hr />
+<%= link_to '地区の一覧へ戻る', categories_path, data: { role: :button, icon: :back } %>

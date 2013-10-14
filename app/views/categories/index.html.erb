@@ -1,27 +1,17 @@
-<h1>Listing categories</h1>
+<% provide :title, "地区の一覧" %>
+<h1><%= yield(:title) %></h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @categories.each do |category| %>
-      <tr>
-        <td><%= category.name %></td>
-        <td><%= link_to 'Show', category %></td>
-        <td><%= link_to 'Edit', edit_category_path(category) %></td>
-        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Category', new_category_path %>
+<% if @categories.present? %>
+<p>ご覧になりたい地区をクリックしてください。</p>
+<ul data-role="listview" data-inset="true">
+  <% @categories.each do |category| %>
+  <li><%= link_to category.name, category %></li>
+  <% end %>
+</ul>
+<% else %>
+<p>地区は一つも登録されていません。</p>
+<% end %>
+<% if current_user.try(:admin?) %>
+<hr />
+<%= link_to '地区を新しく追加する', new_category_path, data: { role: :button, icon: :plus } %>
+<% end %>

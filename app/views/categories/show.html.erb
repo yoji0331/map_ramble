@@ -1,9 +1,21 @@
-<p id="notice"><%= notice %></p>
+<% provide :title, @category.name %>
+<h1><%= yield(:title) %></h1>
 
-<p>
-  <strong>Name:</strong>
-  <%= @category.name %>
-</p>
-
-<%= link_to 'Edit', edit_category_path(@category) %> |
-<%= link_to 'Back', categories_path %>
+<% if @category.places.present? %>
+<p>ご覧になりたい場所をクリックしてください。</p>
+<ul data-role="listview" data-inset="true">
+  <% @category.places.sort{|a, b| a.id <=> b.id }.each do |place| %>
+  <li><%= link_to place.name, place %></li>
+  <% end %>
+</ul>
+<% else %>
+<p>この地区には場所が登録されていません。</p>
+<% end %>
+<% if current_user.try(:admin?) %>
+<hr />
+<%= link_to '地区名を変更する', edit_category_path(@category), data: { role: :button, icon: :gear } %>
+<%= link_to 'この地区を削除する', @category, method: :delete, data: { confirm: "本当に削除していいですか？\n地区に含まれる場所も削除されます。", role: "button", icon: "delete" } %>
+<%= link_to 'この地区に場所を追加する', new_place_path(:category_id => @category.id), data: { role: :button, icon: :plus } %>
+<% end %>
+<hr />
+<%= link_to '地区の一覧へ戻る', categories_path, data: { role: :button, icon: :back } %>

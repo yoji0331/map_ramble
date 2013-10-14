@@ -1,4 +1,5 @@
 MapRamble::Application.routes.draw do
+  get "map" => "map#index", as: "map"
   resources :way_points
 
   resources :my_maps

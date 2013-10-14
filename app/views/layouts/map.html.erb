@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>マップ</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+  <script type="text/javascript" src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+<script type="text/javascript">
+var MAPRAMBLE = {};
+MAPRAMBLE.places = [];
+MAPRAMBLE.way_points = [];
+<% if @places.present? %>
+  <% @places.sort{|a, b| a.id <=> b.id }.each do |place| %>
+MAPRAMBLE.places[<%= place.id %>] = { id: <%= place.id %>, lat: <%= place.lat %>, lng: <%= place.lng %> };
+  <% end %>
+<% end %>
+<% if @checkins.present? %>
+  <% @checkins.each do |checkin| %>
+MAPRAMBLE.places[<%= checkin.place_id %>].isCheckin = true;
+  <% end %>
+<% end %>
+<% if @location.present? %>
+MAPRAMBLE.location = { lat: <%= @location.latitude %>, lng: <%= @location.longitude %>, accuracy: <%= @location.accuracy %>, isLocation: true };
+<% end %>
+<% if @initial.present? %>
+MAPRAMBLE.initial = { lat: <%= @initial.lat %>, lng: <%= @initial.lng %>, zoom: <%= @initial.zoom %> };
+<% if @initial.places_id.present? %>
+MAPRAMBLE.places[<%= @initial.places_id %>].isCurrent = true;
+<% end %>
+<% end %>
+<% if @my_map.present? %>
+  <% @my_map.way_points.each do |way_point| %>
+MAPRAMBLE.way_points.push(<%= way_point.place.id %>);
+MAPRAMBLE.places[<%= way_point.place_id %>].isWayPoint = true;
+  <% end %>
+<% end %>
+</script>
+<script type="text/javascript" src="/js/mapRamble.js"></script>
+<% if ENV['RAILS_ENV'] == "production" %>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41055115-1', 'herokuapp.com');
+  ga('send', 'pageview');
+</script>
+<% end %>
+</head>
+<body>
+  <div data-role="page" id="map">
+    <div data-role="header" id="header">
+      <div data-role="navbar">
+        <ul>
+          <li><%= link_to "ホーム", root_path %></li>
+          <li><a href="#" id="getLocation">現在位置</a></li>
+          <li><a href="#" id="calcRoute">ルート探索</a></li>
+        </ul>
+      </div>
+    </div>
+    <div data-role="content">
+      <div id="mapCanvas"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -26,12 +26,12 @@ end
 
 <% @locations.each do |location| %>
   <tr>
-    <td><%= link_to location.timestamp, maps_path({ :locations_id => location.id }) %></td>
+    <td><%= link_to location.timestamp, map_path({ :locations_id => location.id }) %></td>
     <td><% if location.user.present? %><%= location.user.email %><% end %></td>
     <td><%= location.latitude %></td>
     <td><%= location.longitude %></td>
     <td><%= location.accuracy %></td>
-    <td><%= location.altitude %></td>
+    <td><%= location.latitude %></td>
     <td><%= location.altitudeAccuracy %></td>
     <td><%= location.heading %></td>
     <td><%= location.speed %></td>
@@ -51,7 +51,7 @@ end
 
 <% @locations.each do |location| %>
   <tr>
-    <td><%= link_to location.timestamp, maps_path({ :locations_id => location.id }) %></td>
+    <td><%= link_to location.timestamp, map_path({ :locations_id => location.id }) %></td>
     <td><%= location.latitude %></td>
     <td><%= location.longitude %></td>
     <td><%= link_to '履歴削除', location, method: :delete, data: { confirm: '削除しますか？' } %></td>

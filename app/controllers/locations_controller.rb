@@ -59,7 +59,7 @@ class LocationsController < ApplicationController
   # POST /locations.json
   def create
     @location = Location.new(location_params)
-    if user_signed_in
+    if user_signed_in?
       @location.user_id = current_user.id
     end
 

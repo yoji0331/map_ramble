@@ -1,10 +1,11 @@
 class InitialsController < ApplicationController
   before_action :set_initial, only: [:show, :edit, :update, :destroy]
+  before_action :admin_login_required, except: :index
 
   # GET /initials
   # GET /initials.json
   def index
-    @initials = Initial.all
+    @initial = Initial.first
   end
 
   # GET /initials/1
@@ -28,7 +29,7 @@ class InitialsController < ApplicationController
 
     respond_to do |format|
       if @initial.save
-        format.html { redirect_to @initial, notice: 'Initial was successfully created.' }
+        format.html { redirect_to initials_path, notice: 'Initial was successfully created.' }
         format.json { render action: 'show', status: :created, location: @initial }
       else
         format.html { render action: 'new' }
@@ -42,7 +43,7 @@ class InitialsController < ApplicationController
   def update
     respond_to do |format|
       if @initial.update(initial_params)
-        format.html { redirect_to @initial, notice: 'Initial was successfully updated.' }
+        format.html { redirect_to initials_path, notice: 'Initial was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

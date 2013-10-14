@@ -1,31 +1,24 @@
-<h1>Listing initials</h1>
+<% provide :title, "初期設定" %>
+<h1><%= yield(:title) %></h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Lat</th>
-      <th>Lng</th>
-      <th>Zoom</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @initials.each do |initial| %>
-      <tr>
-        <td><%= initial.lat %></td>
-        <td><%= initial.lng %></td>
-        <td><%= initial.zoom %></td>
-        <td><%= link_to 'Show', initial %></td>
-        <td><%= link_to 'Edit', edit_initial_path(initial) %></td>
-        <td><%= link_to 'Destroy', initial, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
+<% if @initial.present? %>
+<table border="1">
+  <tr>
+    <th>緯度</th><td><%= @initial.lat %></td>
+  </tr>
+  <tr>
+    <th>経度</th><td><%= @initial.lng %></td>
+  </tr>
+  <tr>
+    <th>マップの拡大率</th><td><%= @initial.zoom %></td>
+  </tr>
 </table>
-
-<br>
-
-<%= link_to 'New Initial', new_initial_path %>
+<% else %>
+<p>初期設定がありません。</p>
+<% if current_user.try(:admin?) %>
+<%= link_to '作成', new_initial_path, data: { role: :button } %>
+<% end %>
+<% end %>
+<% if current_user.try(:admin?) %>
+<%= link_to '変更', edit_initial_path(@initial), data: { role: :button } %>
+<% end %>

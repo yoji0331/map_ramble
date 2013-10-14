@@ -1,9 +1,7 @@
 <div data-role="panel" id="menu_panel">
   <ul data-role="listview">
-    <li><%= link_to current_user.name, user_path(current_user) %></li>
     <li data-role="list-divider"><%= t("Favorites") %></li>
     <li><%= link_to t("Home"), root_path %></li>
-    <li><%= link_to t("Search ", model: t('activerecord.models.user').pluralize(:locale)), users_path %></li>
     <li data-role="list-divider"><%= t("Self Informations") %></li>
     <li><%= link_to t("Sign out"), destroy_user_session_path, method: :delete, data: { ajax: false } %></li>
   </ul>

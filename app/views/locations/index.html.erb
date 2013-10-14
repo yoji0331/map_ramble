@@ -1,43 +1,61 @@
-<h1>Listing locations</h1>
+<%
+if current_user.try(:admin?)
+  title = "ユーザーが訪れた地点"
+elsif user_signed_in?
+  title = "あなたが訪れた地点"
+else
+  title = "訪れた地点"
+end
+%>
+<h1><%= yield(title) %></h1>
+<% if current_user.try(:admin?) %>
+<table border="1">
+  <tr>
+    <th>時刻</th>
+    <th>ユーザー</th>
+    <th>緯度</th>
+    <th>経度</th>
+    <th>精度(m)</th>
+    <th>標高</th>
+    <th>標高の精度(m)</th>
+    <th>移動方向(度)</th>
+    <th>移動速度(m/s)</th>
+    <th>エラーの種類</th>
+    <th></th>
+  </tr>
 
-<table>
-  <thead>
-    <tr>
-      <th>Latitude</th>
-      <th>Longitude</th>
-      <th>Accuracy</th>
-      <th>Altitudeaccuracy</th>
-      <th>Heading</th>
-      <th>Speed</th>
-      <th>Error code</th>
-      <th>Timestamp</th>
-      <th>User</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @locations.each do |location| %>
-      <tr>
-        <td><%= location.latitude %></td>
-        <td><%= location.longitude %></td>
-        <td><%= location.accuracy %></td>
-        <td><%= location.altitudeAccuracy %></td>
-        <td><%= location.heading %></td>
-        <td><%= location.speed %></td>
-        <td><%= location.error_code %></td>
-        <td><%= location.timestamp %></td>
-        <td><%= location.user %></td>
-        <td><%= link_to 'Show', location %></td>
-        <td><%= link_to 'Edit', edit_location_path(location) %></td>
-        <td><%= link_to 'Destroy', location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
+<% @locations.each do |location| %>
+  <tr>
+    <td><%= link_to location.timestamp, maps_path({ :locations_id => location.id }) %></td>
+    <td><% if location.user.present? %><%= location.user.email %><% end %></td>
+    <td><%= location.latitude %></td>
+    <td><%= location.longitude %></td>
+    <td><%= location.accuracy %></td>
+    <td><%= location.altitude %></td>
+    <td><%= location.altitudeAccuracy %></td>
+    <td><%= location.heading %></td>
+    <td><%= location.speed %></td>
+    <td><%= location.error_code %></td>
+    <td><%= link_to '削除', location, method: :delete, data: { confirm: '削除しますか？' } %></td>
+  </tr>
+<% end %>
 </table>
+<% elsif user_signed_in? %>
+<table border="1">
+  <tr>
+    <th>時刻</th>
+    <th>緯度</th>
+    <th>経度</th>
+    <th></th>
+  </tr>
 
-<br>
-
-<%= link_to 'New Location', new_location_path %>
+<% @locations.each do |location| %>
+  <tr>
+    <td><%= link_to location.timestamp, maps_path({ :locations_id => location.id }) %></td>
+    <td><%= location.latitude %></td>
+    <td><%= location.longitude %></td>
+    <td><%= link_to '履歴削除', location, method: :delete, data: { confirm: '削除しますか？' } %></td>
+  </tr>
+<% end %>
+</table>
+<% end %>

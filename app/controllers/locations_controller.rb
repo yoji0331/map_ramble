@@ -1,15 +1,49 @@
 class LocationsController < ApplicationController
   before_action :set_location, only: [:show, :edit, :update, :destroy]
+  before_action :login_required, except: :create
+
 
   # GET /locations
   # GET /locations.json
   def index
+    if current_user.try(:admin?)
+      @locations = Location.all
+      @locations_for_json = current_user.locations
+    elsif user_signed_in?
+      @locations = current_user.locations
+      @locations_for_json = @locations
+    end
     @locations = Location.all
+  end
+
+  # GET /locations/resent
+  # GET /locations/resent.json
+  def resent
+    if current_user.try(:admin?)
+      @location = Location.last
+      @location_for_json = current_user.locations.last
+    elsif user_signed_in?
+      @location = current_user.locations.last
+      @location_for_json = @location
+    end
+      
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @location_for_json }
+    end
   end
 
   # GET /locations/1
   # GET /locations/1.json
   def show
+    if current_user.try(:admin?)
+      @location = Location.find(params[:id])
+    elsif user_signed_in?
+      tmp = Location.find(params[:id])
+      if tmp.user_id == current_user.id
+        @location = tmp
+      end
+    end
   end
 
   # GET /locations/new
@@ -25,6 +59,9 @@ class LocationsController < ApplicationController
   # POST /locations.json
   def create
     @location = Location.new(location_params)
+    if user_signed_in
+      @location.user_id = current_user.id
+    end
 
     respond_to do |format|
       if @location.save

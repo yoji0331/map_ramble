@@ -6,6 +6,6 @@ class User < ActiveRecord::Base
          :confirmable, :lockable, :timeoutable
 
   has_many :locations
-  has_many :checkins, through: :checkins, source: :place
+  has_many :checkins
   has_one  :my_map
 end

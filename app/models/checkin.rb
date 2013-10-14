@@ -27,7 +27,7 @@ class Checkin < ActiveRecord::Base
   def Checkin.enable_checkin(place, location)
     if location == nil
       checkin = false
-    elsif get_distance(place.lat, place.lng, location.latitude, location.longitude) < location.accuracy then
+    elsif get_distance(place.lat, place.lng, location.latitude, location.longitude) < location.accuracy
       checkin = true
     else
       checkin = false

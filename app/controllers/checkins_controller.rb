@@ -1,52 +1,63 @@
 class CheckinsController < ApplicationController
-  before_action :set_checkin, only: [:show, :edit, :update, :destroy]
+  before_action :set_checkin, only: [:destroy]
+  before_action :login_required, except: :create
+
 
   # GET /checkins
   # GET /checkins.json
   def index
-    @checkins = Checkin.all
-  end
+    if current_user.try(:admin?)
+      @checkins = Checkin.all
+      @checkins_for_json = current_user.checkins
+    elsif user_signed_in?
+      @checkins = current_user.checkins
+      @checkins_for_json = @checkins
+    end
 
-  # GET /checkins/1
-  # GET /checkins/1.json
-  def show
-  end
-
-  # GET /checkins/new
-  def new
-    @checkin = Checkin.new
-  end
-
-  # GET /checkins/1/edit
-  def edit
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @checkins_for_json }
+    end
   end
 
   # POST /checkins
   # POST /checkins.json
   def create
-    @checkin = Checkin.new(checkin_params)
-
-    respond_to do |format|
-      if @checkin.save
-        format.html { redirect_to @checkin, notice: 'Checkin was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @checkin }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @checkin.errors, status: :unprocessable_entity }
+    @place = Place.find(params[:places_id])
+    if user_signed_in?
+      location = current_user.locations.last
+      location_for_json = location
+      if current_user.admin?
+        location = Location.last
       end
     end
-  end
 
-  # PATCH/PUT /checkins/1
-  # PATCH/PUT /checkins/1.json
-  def update
-    respond_to do |format|
-      if @checkin.update(checkin_params)
-        format.html { redirect_to @checkin, notice: 'Checkin was successfully updated.' }
-        format.json { head :no_content }
+    if user_signed_in?
+      @tmp = Checkin.where(["place_id = ? and member_id = ?", @place.id, current_user.id]).first
+      if @tmp
+        @checkin = @tmp
+        respond_to do |format|
+          if @checkin.touch
+            format.html { redirect_to @place, notice: '再チェックインしました。' }
+            format.json { render json: @place, status: :checkin, location: @place }
+          else
+            format.html { redirect_to @place, notice: 'チェックインできませんでした。' }
+            format.json { render json: @place.errors, status: :unprocessable_entity }
+          end
+        end
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @checkin.errors, status: :unprocessable_entity }
+        @checkin = Checkin.new({"lat" => location.latitude, "lng" => location.longitude, "accuracy" => location.accuracy})
+        @checkin.place_id = @place.id
+        @checkin.user_id = current_user.id
+        respond_to do |format|
+          if @checkin.save
+            format.html { redirect_to @place, notice: 'チェックインしました。' }
+            format.json { render json: @place, status: :checkin, location: @place }
+          else
+            format.html { redirect_to @place, notice: 'チェックインできませんでした。' }
+            format.json { render json: @place.errors, status: :unprocessable_entity }
+          end
+        end
       end
     end
   end

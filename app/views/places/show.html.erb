@@ -1,29 +1,22 @@
-<p id="notice"><%= notice %></p>
+<% provide :title, @place.name %>
+<h1><%= yield(:title) %></h1>
 
-<p>
-  <strong>Name:</strong>
-  <%= @place.name %>
-</p>
-
-<p>
-  <strong>Category:</strong>
-  <%= @place.category %>
-</p>
-
-<p>
-  <strong>Lat:</strong>
-  <%= @place.lat %>
-</p>
-
-<p>
-  <strong>Lng:</strong>
-  <%= @place.lng %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @place.description %>
-</p>
-
-<%= link_to 'Edit', edit_place_path(@place) %> |
-<%= link_to 'Back', places_path %>
+<%= raw(@place.description) %>
+<p><%= place_image_tag @place, width: "320px" %></p>
+<% if @enable_checkin %>
+<%= link_to @checkin_message, checkins_path(:places_id => @place.id), method: :post, data: { role: :button, icon: :check } %>
+<% end %>
+<%= link_to 'マップでこの場所を見る', map_path(:places_id => @place.id), data: { role: :button, icon: "arrow-r", iconpos: :right } %>
+<% if @way_point %>
+<%= button_to 'マイマップから取り除く', @way_point, method: :delete, data: { confirm: '本当に取り除いていいですか？', icon: :delete } %>
+<% else %>
+<%= button_to 'マイマップに追加', way_points_path(place_id: @place), data: { icon: :plus } %>
+<% end %>
+<% if current_user.try(:admin?) %>
+<hr />
+<%= link_to '上記の内容を変更する', edit_place_path(@place), data: { role: :button, icon: :gear } %>
+<%= link_to 'この場所を削除する', @place, method: :delete, data: { confirm: '本当に削除していいですか？', role: :button, icon: :delete } %>
+<%= link_to '場所の一覧へ戻る', places_path, data: { role: :button, icon: :back } %>
+<% end %>
+<hr />
+<%= link_to 'この地区にある場所の一覧へ戻る', @place.category, data: { role: :button, icon: :back } %>

@@ -1,6 +1,59 @@
-<h1>Editing place</h1>
+<% provide :title, "場所の編集" %>
+<h1><%= yield(:title) %></h1>
 
-<%= render 'form' %>
+<%= form_for @place, html: { multipart: true } do |f| %>
+  <% if @place.errors.any? %>
+    <div id="error_explanation" class="alert-error">
+      <h2><%= pluralize(@place.errors.count, "error") %>つのエラーがあり、場所を保存できませんでした。</h2>
 
-<%= link_to 'Show', @place %> |
-<%= link_to 'Back', places_path %>
+      <ul>
+      <% @place.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field" data-role="fieldcontain">
+    <%= f.label :name, "名前" %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field" data-role="fieldcontain">
+    <%= f.label :category_id, "地区" %>
+    <%= select_tag 'place[category_id]', options_from_collection_for_select(@categories, :id, :name, @place.category_id) %>
+  </div>
+  <div class="field" data-role="fieldcontain">
+    <%= f.label :lat, "緯度(Lat)" %>
+    <%= f.text_field :lat %>
+  </div>
+  <div class="field" data-role="fieldcontain">
+    <%= f.label :lng, "経度(Lng)" %>
+    <%= f.text_field :lng %>
+  </div>
+  <div class="field" data-role="fieldcontain">
+    <%= f.label :description, "表示内容" %>
+    <%= f.text_area :description %>
+  </div>
+  <%= f.fields_for :image do |imgf| %>
+    <% if !imgf.object.new_record? && imgf.object.errors.empty? %>
+      <div>
+        現在の画像
+        <%= place_image_tag @place, width: 250, style: "vertical-align: top;" %>
+      </div>
+      <div>
+        <%= imgf.check_box :_destroy %><%= imgf.label :_destroy, "現在の画像を削除する" %>
+        <%= imgf.hidden_field :id %>
+      </div>
+    <% end %>
+  <div class="field" data-role="fieldcontain">
+    <%= imgf.label :uploaded_image, "別な画像に入れ替える" %>
+    <%= imgf.file_field :uploaded_image %>
+  </div>
+  <% end %>
+  <div class="actions">
+    <%= f.submit "上記の内容で更新する", data: { icon: :refresh } %>
+  </div>
+<% end %>
+<hr />
+<%= link_to '場所の表示へ戻る', @place, data: { role: :button, icon: :back } %>
+<%= link_to '場所の一覧へ戻る', places_path, data: { role: :button, icon: :back } %>

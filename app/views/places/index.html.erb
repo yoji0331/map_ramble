@@ -1,35 +1,18 @@
-<h1>Listing places</h1>
+<% provide :title, "場所の一覧" %>
+<h1><%= yield(:title) %></h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Category</th>
-      <th>Lat</th>
-      <th>Lng</th>
-      <th>Description</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<% if @places.present? %>
+<p>ご覧になりたい場所をクリックしてください。</p>
+<ul data-role="listview" data-inset="true">
+<% @places.sort{|a, b| a.id <=> b.id }.each do |place| %>
+<li><%= link_to "#{place.name}: #{place.category.name}", place %></li>
+<% end %>
+</ul>
+<% else %>
+<p>場所は一つも登録されていません。</p>
+<% end %>
 
-  <tbody>
-    <% @places.each do |place| %>
-      <tr>
-        <td><%= place.name %></td>
-        <td><%= place.category %></td>
-        <td><%= place.lat %></td>
-        <td><%= place.lng %></td>
-        <td><%= place.description %></td>
-        <td><%= link_to 'Show', place %></td>
-        <td><%= link_to 'Edit', edit_place_path(place) %></td>
-        <td><%= link_to 'Destroy', place, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Place', new_place_path %>
+<% if current_user.try(:admin?) %>
+<hr />
+<%= link_to '場所を新しく追加する', new_place_path, data: { role: :button, icon: :plus } %>
+<% end %>

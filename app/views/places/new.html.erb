@@ -1,5 +1,49 @@
-<h1>New place</h1>
+<% provide :title, "場所を新しく追加する" %>
+<h1><%= yield(:title) %></h1>
 
-<%= render 'form' %>
+<%= form_for @place, html: { multipart: true } do |f| %>
+  <% if @place.errors.any? %>
+    <div id="error_explanation" class="alert-error">
+      <h2><%= @place.errors.count %>つのエラーがあり、場所を保存できませんでした。:</h2>
 
-<%= link_to 'Back', places_path %>
+      <ul>
+      <% @place.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field" data-role="fieldcontain">
+    <%= f.label :name, "名前" %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field" data-role="fieldcontain">
+    <%= f.label :category_id, "地区" %>
+    <%= select_tag 'place[category_id]', options_from_collection_for_select(@categories, :id, :name, params[:category_id]) %>
+  </div>
+  <div class="field" data-role="fieldcontain">
+    <%= f.label :lat, "緯度(Lat)" %>
+    <%= f.text_field :lat %>
+  </div>
+  <div class="field" data-role="fieldcontain">
+    <%= f.label :lng, "経度(Lng)" %>
+    <%= f.text_field :lng %>
+  </div>
+  <div class="field" data-role="fieldcontain">
+    <%= f.label :description, "表示内容" %>
+    <%= f.text_area :description %>
+  </div>
+  <%= f.fields_for :image do |imgf| %>
+  <div class="field" data-role="fieldcontain">
+    <%= imgf.label :uploaded_image, "表示画像" %>
+    <%= imgf.file_field :uploaded_image %>
+  </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit "上記の内容で追加する", data: { icon: :plus } %>
+  </div>
+<% end %>
+<hr />
+<%= link_to '場所の一覧へ戻る', places_path, data: { role: :button, icon: :back } %>

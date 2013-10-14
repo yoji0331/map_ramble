@@ -11,13 +11,10 @@ class PlacesController < ApplicationController
   # GET /places/1
   # GET /places/1.json
   def show
+    @my_map = current_my_map
+    @way_point = @my_map.registrated(@place)
+
     if user_signed_in?
-      if current_user.my_map.present?
-        @my_map = current_user.my_map
-      else
-        @my_map = current_user.create_my_map
-      end
-      @way_point = @my_map.registrated(@place)
       location = current_user.locations.last
       location_for_json = location
       if current_user.admin?

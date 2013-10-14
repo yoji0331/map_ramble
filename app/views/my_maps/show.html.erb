@@ -1,9 +1,21 @@
-<p id="notice"><%= notice %></p>
+<% provide :title, "マイマップに登録された場所" %>
+<h1><%= yield(:title) %></h1>
 
-<p>
-  <strong>User:</strong>
-  <%= @my_map.user %>
-</p>
+<p>マイマップにお好みの場所を登録できます。</p>
+<p>また、マイマップに登録すると、マップで登録した場所を巡るルートを調べることができます。
+  ルートを調べるには、マイマップに2点以上、8点以下の場所を登録してください。また、出発地は最初の地点、最終目的地は最後の地点となります。</p>
 
-<%= link_to 'Edit', edit_my_map_path(@my_map) %> |
-<%= link_to 'Back', my_maps_path %>
+<% if @my_map.way_points.present? %>
+<ul data-role="listview" data-inset="true" id="sortable">
+<% @my_map.way_points.each do |point| %>
+<% if point.place.present? %>
+<li id="<%= point.id %>"><%= link_to point.place.name, point.place %></li>
+<% end %>
+<% end %>
+</ul>
+<hr />
+<%= link_to 'マイマップをクリアする', @my_map, method: :delete, data: { confirm: "本当にクリアしていいですか？", role: :button, icon: :delete } %>
+<% else %>
+<p>マイマップに登録された場所はありません。</p>
+<% end %>
+<%= link_to 'マップで見る', map_path, data: { role: :button, icon: "arrow-r", iconpos: :right } %>

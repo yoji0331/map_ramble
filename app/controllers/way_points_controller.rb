@@ -24,11 +24,13 @@ class WayPointsController < ApplicationController
   # POST /way_points
   # POST /way_points.json
   def create
-    @way_point = WayPoint.new(way_point_params)
+    @my_map = current_my_map
+    place = Place.find(params[:place_id])
+    @way_point = @my_map.add_place(place.id)
 
     respond_to do |format|
       if @way_point.save
-        format.html { redirect_to @way_point, notice: 'Way point was successfully created.' }
+        format.html { redirect_to @way_point.my_map, notice: 'マイマップに追加しました。' }
         format.json { render action: 'show', status: :created, location: @way_point }
       else
         format.html { render action: 'new' }
@@ -54,10 +56,16 @@ class WayPointsController < ApplicationController
   # DELETE /way_points/1
   # DELETE /way_points/1.json
   def destroy
-    @way_point.destroy
-    respond_to do |format|
-      format.html { redirect_to way_points_url }
-      format.json { head :no_content }
+    @my_map = current_my_map
+    if @way_point.my_map_id == @my_map.id
+      @way_point.destroy
+      session[:my_map_id] = nil
+      respond_to do |format|
+        format.html { redirect_to @my_map }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to @my_map
     end
   end
 

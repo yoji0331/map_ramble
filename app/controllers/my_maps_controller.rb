@@ -1,5 +1,6 @@
 class MyMapsController < ApplicationController
   before_action :set_my_map, only: [:show, :edit, :update, :destroy]
+  before_action :admin_login_required, only: [:index, :new, :edit]
 
   # GET /my_maps
   # GET /my_maps.json

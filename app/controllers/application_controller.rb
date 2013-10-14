@@ -8,7 +8,25 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_login_required
-    raise Forbidden unless current_user.try(:admin)
+    raise Forbidden unless current_user.try(:admin?)
+  end
+
+  def current_my_map
+    if user_signed_in?
+      my_map = current_user.my_map
+    elsif session[:my_map_id].present?
+      my_map = MyMap.find(session[:my_map_id])
+    end
+
+    unless my_map.present?
+      if user_signed_in?
+        my_map = current_user.create_my_map
+      else
+        my_map = MyMap.create
+      end
+      session[:my_map_id] = my_map.id
+    end
+    my_map
   end
 
   class Forbidden < StandardError; end

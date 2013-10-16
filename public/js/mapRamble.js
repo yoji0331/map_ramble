@@ -122,7 +122,8 @@
             options.icon = "http://maps.google.com/mapfiles/arrow.png";
             options.shadow = "http://maps.google.com/mapfiles/arrowshadow.png";
         } else if (place.hasOwnProperty('isLocation') && place.isLocation === true) {
-            options.icon = "/assets/marker_location.png";
+            // options.icon = "/assets/marker_location.png";
+            options.icon = "/images/marker_location.png";
             if (place.hasOwnProperty('accuracy')) {
                 MAPRAMBLE.circle = new google.maps.Circle({
                     center: options.position,
@@ -136,9 +137,11 @@
                 });
             }
         } else if (place.hasOwnProperty('isCheckin') && place.isCheckin === true) {
-            options.icon = "/assets/marker_checkin.png";
+            // options.icon = "/assets/marker_checkin.png";
+            options.icon = "/images/marker_checkin.png";
         } else if (place.hasOwnProperty('isWayPoint') && place.isWayPoint === true) {
-            options.icon = "/assets/marker_my_map.png";
+            // options.icon = "/assets/marker_my_map.png";
+            options.icon = "/images/marker_my_map.png";
         } else {
             options.icon = "http://maps.google.com/mapfiles/marker.png";
         }

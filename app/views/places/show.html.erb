@@ -2,7 +2,7 @@
 <h1><%= yield(:title) %></h1>
 
 <%= raw(@place.description) %>
-<p><%= place_image_tag @place, width: "320px" %></p>
+<p><%= place_image_tag @place, width: "100%" %></p>
 <% if @enable_checkin %>
 <%= link_to @checkin_message, checkins_path(:places_id => @place.id), method: :post, data: { role: :button, icon: :check } %>
 <% end %>

@@ -2,6 +2,8 @@ class Checkin < ActiveRecord::Base
   belongs_to :user
   belongs_to :place
 
+  attr_accessor :lat, :lng, :accuracy
+
   validate do
     place = Place.find(place_id)
     location = Location.new({ :latitude => self.lat, :longitude => self.lng, :accuracy => self.accuracy })

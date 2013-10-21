@@ -20,7 +20,7 @@ end
   </tr>
   <% @checkins.each do |checkin| %>
   <tr>
-    <td><%= link_to checkin.updated_at, maps_path({ :places_id => checkin.place.id }) %></td>
+    <td><%= link_to checkin.updated_at, map_path({ :places_id => checkin.place.id }) %></td>
     <td><% if checkin.user.present? %><%= checkin.user.email %><% end %></td>
     <td><% if checkin.place.present? %><%= checkin.place.name %><% end %></td>
     <td><%= link_to '削除', checkin, method: :delete, data: { confirm: '削除しますか？' } %></td>

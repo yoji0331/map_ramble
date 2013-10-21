@@ -33,7 +33,7 @@ class CheckinsController < ApplicationController
     end
 
     if user_signed_in?
-      @tmp = Checkin.where(["place_id = ? and member_id = ?", @place.id, current_user.id]).first
+      @tmp = Checkin.where(["place_id = ? and user_id = ?", @place.id, current_user.id]).first
       if @tmp
         @checkin = @tmp
         respond_to do |format|

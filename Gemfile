@@ -16,7 +16,7 @@ group :test do
   # Capybaraで使用
   gem 'selenium-webdriver'
   # アプリをユーザーが対話的に使用するように操作
-  gem 'capybara'
+  gem 'capybara', '2.1.0'
   # テストの際にデータを作るのに使用
   gem 'factory_girl_rails'
 end

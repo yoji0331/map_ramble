@@ -3,4 +3,3 @@
 Ruby on Rails 4で開発しています。
 
 by Yoji Sawada.
-Since Mar. 2014

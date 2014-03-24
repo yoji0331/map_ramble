@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # シードを投入するテーブルのリスト(空白区切り)
-table_names = %w(place_images)
+table_names = %w(places initials place_images)
 
 # シードデータが存在すれば、シードを投入する
 table_names.each do |table_name|

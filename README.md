@@ -2,5 +2,5 @@
 
 Ruby on Rails 4で開発しています。
 
-by Yoji Sawada.
+by 青森大学沼田チーム.
 追記のテスト

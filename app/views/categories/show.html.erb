@@ -9,13 +9,13 @@
   <% end %>
 </ul>
 <% else %>
-<p>この地区には場所が登録されていません。</p>
+<p>このジャンルには場所が登録されていません。</p>
 <% end %>
 <% if current_user.try(:admin?) %>
 <hr />
-<%= link_to '地区名を変更する', edit_category_path(@category), data: { role: :button, icon: :gear } %>
-<%= link_to 'この地区を削除する', @category, method: :delete, data: { confirm: "本当に削除していいですか？\n地区に含まれる場所も削除されます。", role: "button", icon: "delete" } %>
-<%= link_to 'この地区に場所を追加する', new_place_path(:category_id => @category.id), data: { role: :button, icon: :plus } %>
+<%= link_to 'ジャンル名を変更する', edit_category_path(@category), data: { role: :button, icon: :gear } %>
+<%= link_to 'このジャンルを削除する', @category, method: :delete, data: { confirm: "本当に削除していいですか？\n地区に含まれる場所も削除されます。", role: "button", icon: "delete" } %>
+<%= link_to 'このジャンルに場所を追加する', new_place_path(:category_id => @category.id), data: { role: :button, icon: :plus } %>
 <% end %>
 <hr />
-<%= link_to '地区の一覧へ戻る', categories_path, data: { role: :button, icon: :back } %>
+<%= link_to 'ジャンルの一覧へ戻る', categories_path, data: { role: :button, icon: :back } %>

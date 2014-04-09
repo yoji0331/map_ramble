@@ -1,7 +1,7 @@
 <div data-role="panel" id="menu_panel">
 <ul data-role="listview">
   <li><%= link_to t("Home"), root_path %></li>
-  <li><%= link_to "地区の一覧へ", categories_path %></li>
+  <li><%= link_to "ジャンルの一覧へ", categories_path %></li>
   <% if user_signed_in? %>
   <li><%= link_to "チェックインした場所の一覧へ", checkins_path %></li>
   <li><%= link_to "位置情報を記録した場所の一覧へ", locations_path %></li>

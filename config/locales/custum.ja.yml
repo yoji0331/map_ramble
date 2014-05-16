@@ -20,4 +20,4 @@ ja:
   "prohibited this offering from being saved": つのエラーにより保存しませんでした。
   "prohibited this want from being saved": つのエラーにより保存しませんでした。
   errors:
-    messages:
+    not_saved: "エラー"

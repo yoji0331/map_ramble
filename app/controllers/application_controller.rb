@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     if user_signed_in?
       my_map = current_user.my_map
     elsif session[:my_map_id].present?
-      my_map = MyMap.find(session[:my_map_id])
+      my_map = MyMap.where(id: session[:my_map_id]).last
     end
 
     unless my_map.present?

@@ -30,10 +30,10 @@ ja:
   devise:
     mailer:
       confirmation_instructions:
-        subject: "[ながれやまオープンガーデン]アカウント登録の確認"
+        subject: "[夜店通り商店街]アカウント登録の確認"
       reset_password_instructions:
-        subject: "[ながれやまオープンガーデン]パスワードの再設定"
+        subject: "[夜店通り商店街]パスワードの再設定"
       unlock_instructions:
-        subject: "[ながれやまオープンガーデン]アカウントの凍結解除"
+        subject: "[夜店通り商店街]アカウントの凍結解除"
     passwords:
       no_token: パスワード再設定のメール以外からは、パスワード再設定ページへアクセスする事はできません。もしパスワード再設定のメールに記載されたリンクをクリックして、このメッセージが表示された場合、不完全なURLのリンクをクリックしていないか確認してください。メーラーによっては、リンクのURLが途中で切れる可能性があります。
